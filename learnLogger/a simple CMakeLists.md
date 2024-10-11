@@ -64,12 +64,12 @@ $cmake ..
 ```
 
 要关注的是`MakeFile`文件
-![alt text](image.png)
+![alt text](/image/MakeFile.png)
 
 因为还要通过MakeFile文件来生成对应的可执行程序
 
 ```bash
 $make
 ```
-![alt text](image-1.png)
+![alt text](/image/app.png)
 生成了可执行程序app
