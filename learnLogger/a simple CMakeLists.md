@@ -64,7 +64,9 @@ $cmake ..
 ```
 
 要关注的是`MakeFile`文件
-![alt text](/image/MakeFile.png)
+TODO 图片更换
+<img src="/image/MakeFile.png" alt="示例图片" >
+
 
 因为还要通过MakeFile文件来生成对应的可执行程序
 
