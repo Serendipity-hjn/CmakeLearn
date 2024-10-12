@@ -15,9 +15,10 @@ project(<project_name>
 
 ```
 参数说明：
-`<project_name>`：项目的名称
-`VERSION`：项目的版本号，可以包含主版本号、次版本号、补丁号和调整号。
+`<project_name>`：项目的名称 <br>
+`VERSION`：项目的版本号，可以包含主版本号、次版本号、补丁号和调整号。<br>
 `DESCRIPTION`：项目的简短描述。
+
 `HOMEPAGE_URL`：项目的官方网站或文档链接。
 `LANGUAGES`：指定项目使用的编程语言，默认是 C 和 CXX。
 
