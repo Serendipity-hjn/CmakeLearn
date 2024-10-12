@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/app2.dir/home/serenNan/CMakeLearn/code/v1/add.cpp.o CMakeFiles/app2.dir/home/serenNan/CMakeLearn/code/v1/div.cpp.o CMakeFiles/app2.dir/home/serenNan/CMakeLearn/code/v1/main.cpp.o -o app2 

@@ -1,0 +1,3 @@
+/home/serenNan/CMakeLearn/code/v2/build/CMakeFiles/app2.dir
+/home/serenNan/CMakeLearn/code/v2/build/CMakeFiles/edit_cache.dir
+/home/serenNan/CMakeLearn/code/v2/build/CMakeFiles/rebuild_cache.dir
