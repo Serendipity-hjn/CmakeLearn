@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Second)
 
 # 定义源文件变量
-set(SRC ../v1/add.cpp ../v1/div.cpp ../v1/main.cpp)
+set(SRC ../c1/add.cpp ../c1/div.cpp ../c1/main.cpp)
 
 # 定义输出的可执行文件的路径
 # 绝对路径 

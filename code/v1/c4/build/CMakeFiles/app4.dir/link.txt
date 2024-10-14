@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/app4.dir/src/add.cpp.o CMakeFiles/app4.dir/src/div.cpp.o CMakeFiles/app4.dir/src/main.cpp.o -o app4 
