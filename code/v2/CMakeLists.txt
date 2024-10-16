@@ -13,5 +13,8 @@ file(GLOB SRC ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 set(INCLUDE ${PROJECT_SOURCE_DIR}/include)
 include_directories(${INCLUDE})
 
+# 指定库的输出地址
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
 # 生成
-add_library(calc SHARED ${SRC})
+add_library(calc STATIC ${SRC})

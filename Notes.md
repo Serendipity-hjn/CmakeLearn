@@ -71,7 +71,7 @@ $cmake ..
 ```bash
 $make
 ```
-<img src="/image/app.png" alt="可执行文件">
+<img src="/image/app.png" alt="可执行程序">
 生成了可执行程序app
 
 到此，一个简单的CMake工程就完成了。
@@ -241,10 +241,11 @@ add_library(库名称 STATIC 源文件1 [源文件2] ...)
 
 在 Windows 中虽然库名和 Linux 格式不同，但也只需指定出名字即可。
 
-Windows
+**Windows**
 - **静态库**：通常以 `.lib` 结尾，例如 `mylibrary.lib`
 - **动态库**：通常以 `.dll` 结尾，例如 `mylibrary.dll`
-Linux
+
+**Linux**
 - **静态库**：通常以 `.a` 结尾，例如 `libmylibrary.a`
 - **动态库**：通常以 `.so` 结尾，例如 `libmylibrary.so`
 
@@ -305,6 +306,8 @@ add_library(calc SHARED ${SRC_LIST})
 
 这样最终就会生成对应的动态库文件 `libcalc.so`。
 
+
+
 ## 指定输出的路径
 
 ### 方式1 - 适用于动态库
@@ -321,7 +324,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 add_library(calc SHARED ${SRC_LIST})
 ```
 
-对于这种方式来说，其实就是通过 `set` 命令给 `EXECUTABLE_OUTPUT_PATH` 宏设置了一个路径，这个路径就是可执行文件生成的路径。
+对于这种方式来说，其实就是通过 `set` 命令给 `EXECUTABLE_OUTPUT_PATH` 宏设置了一个路径，这个路径就是可执行程序生成的路径。
 
 ### 方式2 - 都适用
 
@@ -341,3 +344,59 @@ add_library(calc STATIC ${SRC_LIST})
 ```
 
 ---
+
+## 库文件的使用
+要发布头文件和库文件
+
+> 动态库和静态库本质是编译后的二进制文件，可直接供用户使用
+> 所以要让别人使用时，可以只发布`include`和`lib`（预编译文件夹）目录
+
+库文件是以二进制形式程序，有了头文件才知道调用了什么函数。<br>
+在cmake中需要要使用我们的库文件，就需要链接库。
+
+链接静态库的命令如下：
+```bash
+link_libraries(<static lib> [<static lib>...])
+```
+
+用于设置全局链接库，这些库会链接到之后定义的所有目标上。
+
+- 参数1：指定出要链接的静态库的名字
+  - 可以是全名 `libxxx.a`
+  - 也可以是掐头（`lib`）去尾（`.a`）之后的名字 `xxx`
+
+- 参数2-N：要链接的其它静态库的名字
+
+如果该静态库不是系统提供的（自己制作或者使用第三方提供的静态库）可能出现静态库找不到的情况，此时可以将静态库的路径也指定出来：
+
+```cmake
+link_directories(<lib path>)
+```
+
+这样，修改之后的 `CMakeLists.txt` 文件内容如下:
+
+```cmake
+cmake_minimum_required(VERSION 3.10)
+
+project(calc)
+
+# 文件搜索
+file(GLOB SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+
+# 包含头文件
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+# 链接静态库 clac是自定义库的名字，完整名字是libcalc.a
+link_libraries(calc)
+# 库的位置
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib1)
+
+# 生成可执行程序
+add_executable(app ${SRC})
+```
+> 在生成可执行程序的时候，出来要把我们的源文件指定出来，就是通过`file`搜索出来的`main.cpp`，还需要把我们生成的静态库`libcalc.a`通过`link_libraries`链接到可执行程序中。
+> **如果我们使用的是静态库，那么生成可执行程序的时候，这个静态库的库文件和源文件都会被打包到可执行程序`app`，而动态库不会打包到可执行程序里面去。**
+> `link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib1)`一般是自定义库，系统自带的库系统一般找得到
+
+
+添加了第8行的代码，就可以根据参数指定的路径找到这个静态库了。

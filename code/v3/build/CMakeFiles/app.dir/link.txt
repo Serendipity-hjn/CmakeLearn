@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/app.dir/main.cpp.o -o app   -L/home/serenNan/CMakeLearn/code/v3/lib1  -Wl,-rpath,/home/serenNan/CMakeLearn/code/v3/lib1 -lcalc 
