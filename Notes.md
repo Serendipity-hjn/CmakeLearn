@@ -354,6 +354,8 @@ add_library(calc STATIC ${SRC_LIST})
 库文件是以二进制形式程序，有了头文件才知道调用了什么函数。<br>
 在cmake中需要要使用我们的库文件，就需要链接库。
 
+### 链接静态库
+
 链接静态库的命令如下：
 ```bash
 link_libraries(<static lib> [<static lib>...])
@@ -400,3 +402,82 @@ add_executable(app ${SRC})
 
 
 添加了第8行的代码，就可以根据参数指定的路径找到这个静态库了。
+
+### 链接动态库
+
+在程序编写过程中，除了在项目中引入静态库，好多时候也会使用一些标准的或者第三方提供的一些动态库，关于动态库的制作、使用以及在内存中的加载方式和静态库都是不同的，在此不再过多赘述，如有疑惑请参考Linux 静态库和动态库。
+
+在cmake中链接动态库的命令如下:
+
+```cmake
+target_link_libraries(
+    <target> 
+   ``` <PRIVATE|PUBLIC|INTERFACEmarkdown>
+ <###item> ...链接 动态
+库   
+ [<
+PRIVATE在程序|编PUBLIC写|INTERFACE过程中>， <除了item在>项目中...]引入...)静
+```态
+库
+，用于好多指定时候一个也会使用目标一些（标准的如可或者执行第三方文件提供或的一些动态库库）。在关于编动态译时库需要的制作链接哪些、库使用。以及在它内存支持中的指定库加的载名称方式、和路径以及静态库链接都是库的不同的顺序，。在此
+不再
+过多-赘述 `target，`：如有疑惑指定请要参考加[载Linux的库 的静态文件库的名字和。动态
+库 ]( -https ://sub该ing文件wen可能.是一个cn源文件/。linux
+/static- and -- dynamic该-文件libraries/)可能。是一个
+动态
+库在/cmake静态中库链接动态文件库。的
+ 命令 -如下 该:文件
+可能
+是一个```cmake可
+target执行文件_。link
+_libraries-(
+ `PRIVATE   | <PUBLICtarget|>INTERFACE 
+`    <：PRIVATE动态库|的PUBLIC访问|权限INTERFACE，> <默item认为>PUBLIC...。 
+ 
+    [< - PRIVATE如果|各个PUBLIC动态|库INTERFACE之间> <没有item依赖关系>，...]无需...)
+做```任何
+设置
+，用于指定三一个者没有目标区别（，如一般可无需执行文件指定或，库使用默认）的 PUBLIC在编 译即可时。需要
+链接
+哪些库动态。库的链接具有它传递支持性指定，库如果的名称动态库、 A路径 以及链接链接了库动态的库顺序。B、
+C
+，-动态 **库targetD**链接：指定了动态要加库A载的，库此时的动态文件库的名字。D
+相当于 也 -链接 了该动态库文件B可能、是一个C源，文件并。
+可以使用 动态库 -B 、C该中文件定义可能的方法是一个。动态
+
+库/```静cmake态
+库target文件_。link
+_ libraries - (A该 B文件 C可能)是一个
+可target执行_文件link。
+_libraries
+(-D ** APRIVATE)|
+PUBLIC```
+|INTERFACE
+**- `：动态PUBLIC库`的：访问在权限，public默后面的认为库会被PUBLICLink。到
+前面的 target -中 ，如果并且里面的各个动态符号也会被库之间没有导依赖出关系，，提供无需给做任何第三方设置使用，。
+三-者 `没有PRIVATE区别`，一般：无需在指定private，后面的使用库仅默认被的link PUBLIC到 即可前面的。target
+中，并且
+动态终结库掉的，链接第三方具有不能传递性感知，你调如果了动态啥库库 A。 
+链接了- `动态INTERFACE库`B：、C，在interface后面动态引入库的库D链接不会了被动态链库接到A前面的，target此时动态中，库只会D导相当于出也符号链接。了
+动态库
+B### 、链接C系统，动态并库可以使用
+动态
+库动态B库的、链接C和中静定义态的方法库。是完全
+不同的
+：```
+cmake
+
+target-_ link静_态库libraries会在(生成A B可 C执行)程序
+的target链接_阶段被打link包_到libraries可(D执行 A程序)中
+，```所以
+可执行
+程序- **启动PUBLIC，**静：态在库就被public加后面的载库到会被Link内存到中了前面的。target
+中-， 动态并且库里面的符号在也会生成被可导执行出程序，提供的链接给阶段第三方不会使用被打。包
+到-可 **PRIVATE执行程序**中：，在当private可后面的执行库程序仅被启动被并且link调到用了前面的target动态中库，中的并且函数终结的时候掉，动态，库第三方才会不能被感知加你载调了到啥内存。库
+。
+
+因此- **INTERFACE**，：在在interfacecmake后面中引入指定的要库不会链接被的链动态接到库的时候前面的，target应该中，将只会命令导写出到符号。生成了
+
+可执行###文件 之后链接：系统
+动态库
+
