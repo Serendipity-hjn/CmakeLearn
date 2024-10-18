@@ -405,79 +405,106 @@ add_executable(app ${SRC})
 
 ### 链接动态库
 
-在程序编写过程中，除了在项目中引入静态库，好多时候也会使用一些标准的或者第三方提供的一些动态库，关于动态库的制作、使用以及在内存中的加载方式和静态库都是不同的，在此不再过多赘述，如有疑惑请参考Linux 静态库和动态库。
+在程序编写过程中，除了在项目中引入静态库，好多时候也会使用一些标准的或者第三方提供的一些动态库，关于动态库的制作、使用以及在内存中的加载方式和静态库都是不同的。
 
 在cmake中链接动态库的命令如下:
 
 ```cmake
 target_link_libraries(
     <target> 
-   ``` <PRIVATE|PUBLIC|INTERFACEmarkdown>
- <###item> ...链接 动态
-库   
- [<
-PRIVATE在程序|编PUBLIC写|INTERFACE过程中>， <除了item在>项目中...]引入...)静
-```态
-库
-，用于好多指定时候一个也会使用目标一些（标准的如可或者执行第三方文件提供或的一些动态库库）。在关于编动态译时库需要的制作链接哪些、库使用。以及在它内存支持中的指定库加的载名称方式、和路径以及静态库链接都是库的不同的顺序，。在此
-不再
-过多-赘述 `target，`：如有疑惑指定请要参考加[载Linux的库 的静态文件库的名字和。动态
-库 ]( -https ://sub该ing文件wen可能.是一个cn源文件/。linux
-/static- and -- dynamic该-文件libraries/)可能。是一个
-动态
-库在/cmake静态中库链接动态文件库。的
- 命令 -如下 该:文件
-可能
-是一个```cmake可
-target执行文件_。link
-_libraries-(
- `PRIVATE   | <PUBLICtarget|>INTERFACE 
-`    <：PRIVATE动态库|的PUBLIC访问|权限INTERFACE，> <默item认为>PUBLIC...。 
- 
-    [< - PRIVATE如果|各个PUBLIC动态|库INTERFACE之间> <没有item依赖关系>，...]无需...)
-做```任何
-设置
-，用于指定三一个者没有目标区别（，如一般可无需执行文件指定或，库使用默认）的 PUBLIC在编 译即可时。需要
-链接
-哪些库动态。库的链接具有它传递支持性指定，库如果的名称动态库、 A路径 以及链接链接了库动态的库顺序。B、
-C
-，-动态 **库targetD**链接：指定了动态要加库A载的，库此时的动态文件库的名字。D
-相当于 也 -链接 了该动态库文件B可能、是一个C源，文件并。
-可以使用 动态库 -B 、C该中文件定义可能的方法是一个。动态
+    <PRIVATE|PUBLIC|INTERFACE>
+    <item> ...
+)
+```
 
-库/```静cmake态
-库target文件_。link
-_ libraries - (A该 B文件 C可能)是一个
-可target执行_文件link。
-_libraries
-(-D ** APRIVATE)|
-PUBLIC```
-|INTERFACE
-**- `：动态PUBLIC库`的：访问在权限，public默后面的认为库会被PUBLICLink。到
-前面的 target -中 ，如果并且里面的各个动态符号也会被库之间没有导依赖出关系，，提供无需给做任何第三方设置使用，。
-三-者 `没有PRIVATE区别`，一般：无需在指定private，后面的使用库仅默认被的link PUBLIC到 即可前面的。target
-中，并且
-动态终结库掉的，链接第三方具有不能传递性感知，你调如果了动态啥库库 A。 
-链接了- `动态INTERFACE库`B：、C，在interface后面动态引入库的库D链接不会了被动态链库接到A前面的，target此时动态中，库只会D导相当于出也符号链接。了
-动态库
-B### 、链接C系统，动态并库可以使用
-动态
-库动态B库的、链接C和中静定义态的方法库。是完全
-不同的
-：```
-cmake
+用于指定一个目标（如可执行文件或库）在编译时需要链接哪些库。它支持指定库的名称、路径以及链接库的顺序。
 
-target-_ link静_态库libraries会在(生成A B可 C执行)程序
-的target链接_阶段被打link包_到libraries可(D执行 A程序)中
-，```所以
-可执行
-程序- **启动PUBLIC，**静：态在库就被public加后面的载库到会被Link内存到中了前面的。target
-中-， 动态并且库里面的符号在也会生成被可导执行出程序，提供的链接给阶段第三方不会使用被打。包
-到-可 **PRIVATE执行程序**中：，在当private可后面的执行库程序仅被启动被并且link调到用了前面的target动态中库，中的并且函数终结的时候掉，动态，库第三方才会不能被感知加你载调了到啥内存。库
-。
+- `target`：指定要加载的库的文件的名字
+  - 该文件可能是一个源文件
+  - 该文件可能是一个动态库/静态库文件
+  - 该文件可能是一个可执行文件
 
-因此- **INTERFACE**，：在在interfacecmake后面中引入指定的要库不会链接被的链动态接到库的时候前面的，target应该中，将只会命令导写出到符号。生成了
+- `PRIVATE|PUBLIC|INTERFACE`：动态库的访问权限，默认为`PUBLIC`
 
-可执行###文件 之后链接：系统
-动态库
+  - 如果各个动态库之间没有依赖关系，无需做任何设置，三者没有没有区别，**一般无需指定，使用默认的 PUBLIC 即可**。
 
+  - **动态库的链接具有传递性**，如果动态库 A 链接了动态库B、C，动态库D链接了动态库A，此时动态库D相当于也链接了动态库B、C，并可以使用动态库B、C中定义的方法。
+
+```Cmake
+target_link_libraries(A B C)
+target_link_libraries(D A)
+```
+
+- `PUBLIC`：在`public`后面的库会被`link`到前面的`target`中，并且里面的符号也会被导出，提供给第三方使用。
+- `PRIVATE`：在`private`后面的库仅被`link`到前面的`target`中，并且终结掉，第三方不能感知你调了啥库
+- `INTERFACE`：在`interface`后面引入的库不会被链接到前面的`target`中，只会导出符号。
+
+### 链接系统动态库
+动态库的链接和静态库是完全不同的：
+- 静态库会在生成可执行程序的链接阶段被打包到可执行程序中，所以可执行程序启动，静态库就被加载到内存中了。
+- 动态库在生成可执行程序的链接阶段不会被打包到可执行程序中，当可执行程序被启动并且调用了动态库中的函数的时候，动态库才会被加载到内存。
+
+因此，在 cmake 中指定要链接的动态库的时候，**应该将命令写到生成了可执行文件之后**：
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+project(TEST)
+file(GLOB SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+# 添加并指定最终生成的可执行程序名
+add_executable(app ${SRC_LIST})
+# 指定可执行程序要链接的动态库名字
+target_link_libraries(app pthread)
+```
+
+在 `target_link_libraries(app pthread)` 中：
+- `app`: 对应的是最终生成的可执行程序的名字
+- `pthread`：这是可执行程序要加载的动态库，这个库是系统提供的线程库，全名为 `libpthread.so`，在指定的时候一般会掐头（`lib`）去尾（`.so`）。
+
+### 链接第三方动态库
+假设在测试文件 `main.cpp` 中既使用了自己制作的动态库 `libcalc.so` 又使用了系统提供的线程库，此时 `CMakeLists.txt` 文件可以这样写：
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+project(TEST)
+file(GLOB SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+add_executable(app ${SRC_LIST})
+target_link_libraries(app pthread calc)
+```
+
+在第六行中，`pthread`、`calc` 都是可执行程序 `app` 要链接的动态库的名字。当可执行程序 `app` 生成之后并执行该文件，会提示有如下错误信息：
+
+```shell
+$ ./app 
+./app: error while loading shared libraries: libcalc.so: cannot open shared object file: No such file or directory
+```
+
+这是因为可执行程序启动之后，去加载 `calc` 这个动态库，但是不知道这个动态库被放到了什么位置解决动态库无法加载的问题，所以就加载失败了，在 CMake 中可以在生成可执行程序之前，通过命令指定出要链接的动态库的位置，指定静态库位置使用的也是这个命令：
+
+```cmake
+link_directories(path)
+```
+
+所以修改之后的 `CMakeLists.txt` 文件应该是这样的：
+
+```cmake
+cmake_minimum_required(VERSION 3.0)
+project(TEST)
+file(GLOB SRC_LIST ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+# 指定源文件或者动态库对应的头文件路径
+include_directories(${PROJECT_SOURCE_DIR}/include)
+# 指定要链接的动态库的路径
+link_directories(${PROJECT_SOURCE_DIR}/lib)
+# 添加并生成一个可执行程序
+add_executable(app ${SRC_LIST})
+# 指定要链接的动态库
+target_link_libraries(app pthread calc)
+```
+
+通过 `link_directories` 指定了动态库的路径之后，在执行生成的可执行程序的时候，就不会出现找不到动态库的问题了。
+
+### 总结
+- `target_link_libraries` 是更推荐的方式，因为它允许更精确的控制和管理链接库的依赖，特别是在大型项目中，它能够避免全局设置可能带来的问题。
+- `link_libraries` 虽然简单，但在复杂的项目中可能会导致意外的问题，通常适用于简单的项目或临时设置。
+- 建议在 CMake 项目中优先使用 `target_link_libraries`。
+```
