@@ -6,5 +6,6 @@ aux_source_directory(./ SRC)
 include_directories(${HEADPATH})
 set(LIBRARY_OUTPUT_PATH ${LIBPATH})
 link_directories(${LIBPATH})
-link_libraries(${CALCLIB})
 add_library(${SORTLIB} STATIC ${SRC})
+
+target_link_libraries(${SORTLIB} ${CALCLIB})
